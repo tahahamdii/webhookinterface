@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Doctor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+  <div class="container">
+      <div class="phone">
+        <div class="content">
+          <div>
+          <nav role="navigation">
+            <div id="menuToggle">
+              <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+            <ul id="menu">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Patients</a></li>
+              <li><a href="#">Nurses</a></li>
+
+            </ul>
+           </div>
+           <span class="medisys">
+            Medisys 🩺
+           </span>
+          </nav>
+        </div>
+        <div class="headd">
+          🚨Alerts from patients🚨
+        </div>
+        <div id="message">
+
+        </div>
+        <div id="avatar">
+
+          <img src="giphy.gif" alt="GIF">
+
+
+        </div>
+        </div>
+
+       </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+    var currentMessageId = '';
+
+    function getMessage() {
+      fetch('/message')
+      .then(response => response.json())
+      .then(data => {
+        var messageDiv = document.getElementById('message');
+        var newMessageId = data.message_id;
+        var newMessage = data.message;
+        
+        if (newMessageId !== currentMessageId) {
+          messageDiv.textContent = newMessage;
+          currentMessageId = newMessageId;
+          console.log('Message updated on HTML');
+        } else {
+          console.log('Same message as before on HTML');
+        }
+      })
+      .catch(error => {
+        console.error('Failed to fetch:', error);
+      });
+    }
+
+    // Call getMessage initially
+    getMessage();
+
+    // Poll the server every 5 seconds
+    setInterval(getMessage, 5000);
+  </script>
+</body>
+</html>
